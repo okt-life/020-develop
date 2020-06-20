@@ -34,7 +34,11 @@ function gssDay(name,startdata,finishdata){
        }
     }
   }
-  return [day,time];
+  startdata=new Date(startdata * 1000);
+  startdata=startdata.toLocaleString();
+  finishdata=new Date(finishdata * 1000);
+  finishdata=finishdata.toLocaleString();
+  return [day,time,startdata,finishdata];
 }
 
 function gssText(name,free){

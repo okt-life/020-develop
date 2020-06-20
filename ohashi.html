@@ -17,17 +17,17 @@
     <input type="button" value="トップページへ" onclick="window.top.location.href = '<?!=url?>?page=top-page';" />
     <!--退勤時間検索-->
     <div class="content">
-        <button class="js-modal-open_leaving">退勤時間を検索</button>
+        <button class="js-modal-open-leaving">退勤時間を検索</button>
     </div>
-    <div class="modal js-modal_leaving">
-        <div class="modal__bg js-modal-close"></div>
+    <div class="modal js-modal-leaving">
+        <div class="modal__bg js-modal-close-leaving"></div>
         <div class="modal__content search-container">
             <div class="modal-search-contents">
-                <a class="js-modal-close_leaving" href="">閉じる</a>
+                <span class="js-modal-close-leaving close"></span>
                 <p>検索ページ</p><br>
 
-                <input class="input-text" id="name" type="text" placeholder="">
-                <input class="input-text" id="id" type="text" placeholder="">
+                <input class="input-text" id="name" type="text" placeholder="名前">
+                <input class="input-text" id="id" type="text" placeholder="社員番号">
 
                 <input type="date" id="startdata" />~
                 <input type="date" id="finishdata" />

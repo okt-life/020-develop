@@ -5,7 +5,19 @@
           var name = document.getElementById("name").value;
           var startdata = document.getElementById("startdata").value;
           var finishdata = document.getElementById("finishdata").value;
-          google.script.run.withSuccessHandler(onSuccess_leaving).withFailureHandler(onFailure_leaving).gssDay(name,startdata,finishdata);//サーバー側のスクリプトを呼び出し（非同期）
+          if (name == "") {
+            alert("名前を入力してください");
+            return false;
+          } else if (startdata == "") {
+            alert("開始日を入力してください");
+            return false;
+          } else if (finishdata == "") {
+            alert("終了日を入力してください");
+            return false;
+          } else {
+            google.script.run.withSuccessHandler(onSuccess_leaving).withFailureHandler(onFailure_leaving).gssDay(name,startdata,finishdata);//サーバー側のスクリプトを呼び出し（非同期）
+          }
+          
        }
        
        //成功時
@@ -15,6 +27,8 @@
           var time=document.getElementById("time");
           $(function(){
             var th="<tr><th>月日</th><th>時間</th></tr>";
+            var period="<p>表示期間<br>"+res[2]+"~"+res[3]+"</p>";
+            $('#table-display').append(period);
             $('#table-display').append('<table class="table-content"></table>');
             $('.table-content').append(th);
             for(let i=0;i<res[0].length;i++){
