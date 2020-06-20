@@ -1,0 +1,35 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+
+       function doAction_leaving(){
+          var name = document.getElementById("name").value;
+          var startdata = document.getElementById("startdata").value;
+          var finishdata = document.getElementById("finishdata").value;
+          google.script.run.withSuccessHandler(onSuccess_leaving).withFailureHandler(onFailure_leaving).gssDay(name,startdata,finishdata);//サーバー側のスクリプトを呼び出し（非同期）
+       }
+       
+       //成功時
+       function onSuccess_leaving(res){
+          $('#table-display').empty();
+          var day=document.getElementById("day");
+          var time=document.getElementById("time");
+          $(function(){
+            var th="<tr><th>月日</th><th>時間</th></tr>";
+            $('#table-display').append('<table class="table-content"></table>');
+            $('.table-content').append(th);
+            for(let i=0;i<res[0].length;i++){
+              console.log(res[0][i]);
+              console.log(res[1][i]);
+              var td="<tr><td>"+res[0][i]+"</td><td>"+res[1][i]+"</td></tr>";
+              $('.table-content').append(td);
+            }
+           
+          });
+       }
+       //失敗時
+       function onFailure_leaving(res){
+          var message = document.getElementById("message_leaving");
+          message.innerHTML = res;
+       }
+
+</script>
