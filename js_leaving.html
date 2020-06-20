@@ -14,6 +14,7 @@
           } else if (finishdata == "") {
             alert("終了日を入力してください");
             return false;
+            //追加で社員番号のエラーハンドリングも実装する
           } else {
             google.script.run.withSuccessHandler(onSuccess_leaving).withFailureHandler(onFailure_leaving).gssDay(name,startdata,finishdata);//サーバー側のスクリプトを呼び出し（非同期）
           }
@@ -25,6 +26,7 @@
           $('#table-display').empty();
           var day=document.getElementById("day");
           var time=document.getElementById("time");
+          if(res[0].length!=0){
           $(function(){
             var th="<tr><th>月日</th><th>時間</th></tr>";
             var period="<p>表示期間<br>"+res[2]+"~"+res[3]+"</p>";
@@ -39,6 +41,11 @@
             }
            
           });
+          }else{
+            var error="<p>検索結果がありません</p>";
+            $('#table-display').append(error);
+
+          }
        }
        //失敗時
        function onFailure_leaving(res){
