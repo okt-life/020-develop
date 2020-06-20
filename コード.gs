@@ -35,10 +35,11 @@ function gssDay(name,startdata,finishdata){
     }
   }
   startdata=new Date(startdata * 1000);
-  startdata=startdata.toLocaleString();
+  var startdata_string=startdata.toLocaleString();
   finishdata=new Date(finishdata * 1000);
-  finishdata=finishdata.toLocaleString();
-  return [day,time,startdata,finishdata];
+  var finishdata_string=finishdata.toLocaleString();
+  
+  return [day,time,startdata_string,finishdata_string,startdata,finishdata];
 }
 
 function gssText(name,free){

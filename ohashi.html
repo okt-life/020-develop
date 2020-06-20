@@ -24,16 +24,16 @@
         <div class="modal__content search-container">
             <div class="modal-search-contents">
                 <span class="js-modal-close-leaving close"></span>
-                <p>検索ページ</p><br>
+                <p>退勤時間検索</p><br>
 
-                <input class="input-text" id="name" type="text" placeholder="名前">
+                <input class="input-text" id="name" type="text" placeholder="名前（フルネーム、スペースなし）">
                 <input class="input-text" id="id" type="text" placeholder="社員番号">
 
                 <input type="date" id="startdata" />~
                 <input type="date" id="finishdata" />
                 <br><br>
 
-                <button onclick="doAction_leaving()">検索</button>
+                <button id="submit-leaving" onclick="doAction_leaving()">検索</button>
 
             </div>
             <div class="modal-display-contents">
