@@ -28,18 +28,24 @@ function gssDay(name,startdata,finishdata){
         if(startdata<=timedata && finishdata>=timedata){
           var dates = new Date(timedata * 1000);
           var date=dates.toLocaleDateString();
-          var dateTime=dates.toLocaleTimeString('ja-JP')
+          var dateTime=dates.toLocaleTimeString('ja-JP');
           day.push(date);
-          time.push(dateTime)
+          time.push(dateTime);
        }
     }
   }
   startdata=new Date(startdata * 1000);
-  var startdata_string=startdata.toLocaleString();
   finishdata=new Date(finishdata * 1000);
+  var startmonth=(startdata.getMonth()+1).toString().padStart(2, '0');
+  var startday=startdata.getDate().toString().padStart(2, '0');
+  var finishmonth=(finishdata.getMonth()+1).toString().padStart(2, '0');
+  var finishday=finishdata.getDate().toString().padStart(2, '0');
+  
+ 
+  var startdata_string=startdata.toLocaleString();
   var finishdata_string=finishdata.toLocaleString();
   
-  return [day,time,startdata_string,finishdata_string,startdata,finishdata];
+  return [day,time,startdata_string,finishdata_string,finishmonth,finishday];
 }
 
 function gssText(name,free){

@@ -23,6 +23,9 @@
        
        //成功時
        function onSuccess_leaving(res){
+          console.log(res[4]);
+          console.log(res[5]);
+          return false;
           $('#table-display').empty();
           var day=document.getElementById("day");
           var time=document.getElementById("time");
