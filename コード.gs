@@ -58,12 +58,12 @@ function gssDay(name, startdata, finishdata) {
             time_impression.push(time[title.indexOf(impressions[i])]);
         }
     }
+    startdata = new Date(startdata * 1000);
+    finishdata = new Date(finishdata * 1000);
+    startdata = startdata.toLocaleString();
+    finishdata = finishdata.toLocaleString();
 
-
-    var startdata_string = startdata.toLocaleString();
-    var finishdata_string = finishdata.toLocaleString();
-
-    return [day, time, startdata_string, finishdata_string, day_impression,time_impression];
+    return [day, time, startdata, finishdata, day_impression,time_impression];
 }
 
 function gssText(name, free) {
