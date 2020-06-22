@@ -66,12 +66,31 @@ function gssDay(name, startdata, finishdata) {
     return [day, time, startdata, finishdata, day_impression,time_impression];
 }
 
-function gssText(name, free) {
-    //スプレッドシートの情報を取得する処理を記入
-    var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
-    var names = values[1][1];
-    var classes = values[1][2];
-    var titles = values[1][3];
-    var impressions = values[1][4];
-    return [names, classes, titles, impressions];
+function gssText(name,free){
+//スプレッドシートの情報を取得する処理を記入
+  var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
+  var names = values[1][1];
+  var classes = values[1][2];
+  var titles = values[1][3];
+  
+  var comments=[];
+  
+  
+  for(let i=1; i<12; i++){
+       
+         var impressions = values[i][4];
+         
+        if(impressions.indexOf(free)==false){
+          
+          comments.push ('<li>'+ impressions +'</li>');
+         
+          }
+  }
+  
+  
+  
+  
+  
+  return comments;
+  
 }

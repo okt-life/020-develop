@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= HtmlService.createHtmlOutputFromFile('css_pdca').getContent(); ?>
+    <?!= HtmlService.createHtmlOutputFromFile('js_pdca').getContent(); ?>
+  </head>
+  <body>
+  <?var url = getScriptUrl();?>
+  <input type="button" value="メインページへ" class="btn-leave submit-leaving" onclick="window.top.location.href = '<?!=url?>?page=ohashi';"/>
+    <ul class="tab-list">
+		<li class="active">登録</li>
+		<li>アポランキング</li>
+		<li>PDCA一覧</li>
+	</ul>
+
+<div class="tab-box">
+		<div class="tab-content open">
+			<form>
+            <input><br>
+            <textarea></textarea>
+            </form>
+		</div>
+		<!-- /.tab-content -->
+		<div class="tab-content">
+			<p>アポのランキング表示</p>
+		</div>
+		<!-- /.tab-content -->
+		<div class="tab-content">
+			<p>PDCAについて</p>
+		</div>
+	</div>
+<!-- /.tab-box -->
+  </body>
+</html>
+
+
