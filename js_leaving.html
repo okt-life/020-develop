@@ -26,7 +26,7 @@
           console.log(res[0]);
           console.log(res[1]);
           console.log(res[4]);
-          return false;
+          
           $('#table-display').empty();
           var day=document.getElementById("day");
           var time=document.getElementById("time");
@@ -37,10 +37,8 @@
             $('#table-display').append(period);
             $('#table-display').append('<table class="table-content"></table>');
             $('.table-content').append(th);
-            for(let i=0;i<res[0].length;i++){
-              console.log(res[0][i]);
-              console.log(res[1][i]);
-              var td="<tr><td>"+res[0][i]+"</td><td>"+res[1][i]+"</td></tr>";
+            for(let i=0;i<res[4].length;i++){
+              var td="<tr><td>"+res[4][i]+"</td><td>"+res[5][i]+"</td></tr>";
               $('.table-content').append(td);
             }
            

@@ -17,6 +17,13 @@ $(function(){
         $('.js-modal').fadeOut();
         return false;
     });
+     $(".imagestart").click(function(){
+		$(".loading").show();
+		$(".container").load('top-page.html', function(){
+			$(".loading").fadeOut();
+			$(".container").fadeIn();
+		});
+	});
      
 });
 

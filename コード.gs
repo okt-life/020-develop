@@ -20,6 +20,7 @@ function gssDay(name, startdata, finishdata) {
     var impression = [];
     var title = [];
     var day_impression = [];
+    var time_impression=[];
     var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
     var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
     for (var i = 1; i < length; i++) {
@@ -50,10 +51,11 @@ function gssDay(name, startdata, finishdata) {
     var impressions = impression.filter(function (x, i, self) {
         return self.indexOf(x) === i;
     });
-
+    
     for (var i = 0; i < impressions.length; i++) {
         if (title.indexOf(impressions[i]) != -1) {
-            day_impression.push(title[title.indexOf(impressions[i])]);
+            day_impression.push(day[title.indexOf(impressions[i])]);
+            time_impression.push(time[title.indexOf(impressions[i])]);
         }
     }
 
@@ -61,7 +63,7 @@ function gssDay(name, startdata, finishdata) {
     var startdata_string = startdata.toLocaleString();
     var finishdata_string = finishdata.toLocaleString();
 
-    return [day, time, startdata_string, finishdata_string, day_impression];
+    return [day, time, startdata_string, finishdata_string, day_impression,time_impression];
 }
 
 function gssText(name, free) {
