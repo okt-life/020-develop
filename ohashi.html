@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>page1</title>
+    <base target="_top">
+    <?!= HtmlService.createHtmlOutputFromFile('css').getContent(); ?>
+    <?!= HtmlService.createHtmlOutputFromFile('css_modal').getContent(); ?>
+    <?!= HtmlService.createHtmlOutputFromFile('css_impression').getContent(); ?>
+    <?!= HtmlService.createHtmlOutputFromFile('css_leaving').getContent(); ?>
+  </head>
+  <body>
+ <?var url = getScriptUrl();?>
+ <!--退勤時間検索-->
+    <div class="content">
+        <button class="js-modal-open-leaving btn-leave submit-leaving">退勤時間を検索</button>
+    </div>
+    <div class="modal js-modal-leaving">
+        <div class="modal__bg js-modal-close-leaving"></div>
+        <div class="modal__content search-container">
+            <div class="modal-search-contents">
+                <span class="js-modal-close-leaving close"></span>
+                <p class="leave-title">退勤時間検索</p><br>
+
+                <input class="input-text" id="name" type="text" placeholder="名前（フルネーム、スペースなし）">
+                <input class="input-text" id="id" type="text" placeholder="社員番号">
+
+                <input type="date" id="startdata" />~
+                <input type="date" id="finishdata" />
+                <br><br>
+
+                <button class="submit-leaving" class="imagestart" onclick="doAction_leaving()">検索</button>
+                
+                <div class="loading"><img src="https://drive.google.com/uc?id=1c4HhKr_z8D7heiQcWLQ0EWL_id3T0bbO"></div>
+                <div class="container">
+                </div>
+
+            </div>
+            <div class="modal-display-contents">
+                <div id="table-display"></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="content">
+    <input type="button" value="pdca" class="btn-leave submit-leaving" onclick="window.top.location.href = '<?!=url?>?page=pdca';"/>
+   </div>
+   <!--感想検索表示-->
+   <div class="content">
+        <button class="js-modal-open btn-leave submit-leaving">感想を検索</button>
+   </div>
+   <div class="modal js-modal">
+        <div class="modal__bg js-modal-close"></div>
+        <div class="modal__content">
+            <a class="js-modal-close" href="">閉じる</a>
+            <p>検索ページ</p>
+           
+              <label for="namae">名前</label><br>
+              <input type="text" id="namae" class="search-text"/><br>
+              <label for="free">フリーワード</label><br>
+              <input type="text" id="free"class="search-text"/><br>
+             
+              日付<br><input type="date"　id="date_s">
+              ～
+              <input type="date" id="date_f"><br><br>
+              <button class="imagestart" onclick="doAction_impression()">検索</button>
+              <div class="loading"><img src="https://drive.google.com/uc?id=1c4HhKr_z8D7heiQcWLQ0EWL_id3T0bbO"></div>
+              <div class="container">
+              </div>
+              <p id="message" class="wrap"></p>
+              <!--<input type="button"  value="検索" onclick="window.top.location.href = '?page=impression';"/>-->
+        </div>
+   </div>
+    <?!= HtmlService.createHtmlOutputFromFile('js_modal').getContent(); ?>
+    <?!= HtmlService.createHtmlOutputFromFile('js_leaving').getContent(); ?>
+    <?!= HtmlService.createHtmlOutputFromFile('js_impression').getContent(); ?>
+  </body>
+</html>
+
+
