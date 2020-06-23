@@ -46,7 +46,7 @@
    </div>
    <!--感想検索表示-->
    <div class="content">
-        <button class="js-modal-open btn-leave submit-leaving">感想を検索</button>
+        <button class="impression btn-leave submit-leaving" onclick="func()">感想を検索</button>
    </div>
    <div class="modal js-modal">
         <div class="modal__bg js-modal-close"></div>
@@ -55,7 +55,7 @@
             <p>検索ページ</p>
            
               <label for="namae">名前</label><br>
-              <input type="text" id="namae" class="search-text"/><br>
+              <input type="text" id="namae" class="search-text" readonly/><br>
               <label for="free">フリーワード</label><br>
               <input type="text" id="free"class="search-text"/><br>
              
@@ -75,6 +75,7 @@
               <!--<input type="button"  value="検索" onclick="window.top.location.href = '?page=impression';"/>-->
         </div>
    </div>
+   <?!= HtmlService.createHtmlOutputFromFile('js_pass').getContent(); ?>
     <?!= HtmlService.createHtmlOutputFromFile('js_modal').getContent(); ?>
     <?!= HtmlService.createHtmlOutputFromFile('js_leaving').getContent(); ?>
     <?!= HtmlService.createHtmlOutputFromFile('js_impression').getContent(); ?>
