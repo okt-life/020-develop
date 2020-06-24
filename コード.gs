@@ -119,8 +119,8 @@ function getPass(name, pass) {
     var names = [];
     var passes = [];
     var flag = 0;
-    var name=String(name);
-    var pass=String(pass);
+    name=Number(name);
+    pass=String(pass);
     if (name != "" && pass != "") {
         for (var i = 0; i < length; i++) {
             names.push(sheet_see[i][1]);
@@ -140,3 +140,25 @@ function getPass(name, pass) {
     return flag;
 
 }
+
+////山岸pdca
+    
+function doPost(postdata){
+    
+    var sh=SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var time=new Date();
+    
+    var ap = postdata.parameters.ap.toString();
+    var name=postdata.parameters.name.toString();
+    var target=postdata.parameters.target.toString();
+    var p=postdata.parameters.p.toString();
+    var d=postdata.parameters.d.toString();
+    var c=postdata.parameters.c.toString();
+    var a=postdata.parameters.a.toString();
+    
+    sh.appendRow([time,ap,name,target,p,d,c,a]);
+    
+    var resultpage=HtmlService.createTemplateFromFile("result");
+    return resultpage.evaluate();
+}
+
