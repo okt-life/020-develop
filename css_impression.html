@@ -1,7 +1,93 @@
-<script>
-
-ul {
-  list-style: none;
+<style>
+p {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
 }
 
-</script>
+table {
+    font-size: 1.4em;
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.table-content th {
+    background-color: #e9727e;
+    border: solid 1px #ccc;
+    color: #fff;
+    padding: 10px;
+}
+
+.table-content td {
+    font-weight: 400;
+    border: solid 1px rgba(240, 248, 255, 1);
+    padding: 10px;
+}
+
+.leave-title {
+    font-size: 1.4em;
+}
+
+.search-container-impression {
+    color: #fff;
+    background-color: rgba(252, 206, 244, 0.7);
+}
+
+
+/*form*/
+
+.modal-search-contents input {
+    vertical-align: center;
+    border: 0;
+    padding: 5px;
+    font-size: 1.1em;
+    font-family: Arial, sans-serif;
+    color: #aaa;
+    border: solid 1px #ccc;
+    margin: 0 0 20px;
+    width: 80%;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+    box-shadow: inner 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.submit-leaving {
+    display: inline-block;
+    padding: 0.3em 1em;
+    background-color: #3cad7e;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 800;
+    border: solid 2px #fff;
+    border-radius: 3px;
+    transition: .4s;
+}
+
+.submit-leaving:hover {
+    border: solid 2px #67c5ff;
+    background: #67c5ff;
+    color: white;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 640px) {
+    .last td:last-child {
+        border-bottom: solid 1px #ccc;
+        width: 100%;
+    }
+    .table-content {
+        width: 80%;
+    }
+    .table-content th,
+    .table-content td {
+        border-bottom: none;
+        display: block;
+        width: 100%;
+    }
+}
+</style>

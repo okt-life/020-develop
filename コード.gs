@@ -18,6 +18,7 @@ function gssDay(name, startdata, finishdata) {
     var day = [];
     var time = [];
     var impression = [];
+    var impression_zenkaku = [];
     var title = [];
     var day_impression = [];
     var time_impression = [];
@@ -33,14 +34,16 @@ function gssDay(name, startdata, finishdata) {
             if (startdata <= timedata && finishdata >= timedata) {
                 var month_string = (dates.getMonth() + 1).toString().padStart(2, '0');
                 var day_string = dates.getDate().toString().padStart(2, '0');
-                var string_date = month_string + day_string + "感想";
-                //var hiragana_ver=month_string+day_string+"かんそう";
+                var string=month_string + day_string;
+                var string_date = hankakutoZenkaku(string) + "感想";
+                //var string_date_zenkaku=hankakutoZenkaku(string)+ "感想";
                 impression.push(string_date);
+                //impression_zenkaku.push(string_date_zenkaku);
                 var date = dates.toLocaleDateString();
                 var dateTime = dates.toLocaleTimeString('ja-JP');
                 day.push(date);
                 time.push(dateTime);
-                title.push(values[i][3]);
+                title.push(hankakutoZenkaku(values[i][3]));
 
 
             }
@@ -51,7 +54,7 @@ function gssDay(name, startdata, finishdata) {
     var impressions = impression.filter(function (x, i, self) {
         return self.indexOf(x) === i;
     });
-
+    
     for (var i = 0; i < impressions.length; i++) {
         if (title.indexOf(impressions[i]) != -1) {
             day_impression.push(day[title.indexOf(impressions[i])]);
@@ -67,7 +70,7 @@ function gssDay(name, startdata, finishdata) {
 }
 
 
-function gssText(name, free,startdata, finishdata) {
+function gssText(name, free, startdata, finishdata) {
     //スプレッドシートの情報を取得する処理を記入
     var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
     var length = values.length;
@@ -75,6 +78,7 @@ function gssText(name, free,startdata, finishdata) {
     var impressions_sum = [];
     var titles = [];
     var titles_sum = [];
+    var day_impression = [];
     var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
     var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
     for (var i = 1; i < length; i++) {
@@ -87,19 +91,20 @@ function gssText(name, free,startdata, finishdata) {
             if (startdata <= timedata && finishdata >= timedata) {
                 impressions.push(values[i][4]);
                 titles.push(values[i][3]);
+                day_impression.push(dates.toLocaleString());
             }
         }
     }
 
-    
+
     for (var i = 0; i < impressions.length; i++) {
         if (impressions[i].indexOf(free) != -1 || titles[i].indexOf(free) != -1) {
             impressions_sum.push(impressions[i]);
             titles_sum.push(titles[i]);
         }
     }
-    
-    return [impressions_sum, titles_sum];
+
+    return [impressions_sum, titles_sum,day_impression];
 }
 /*
 function gssText(name, free) {
@@ -155,8 +160,8 @@ function getPass(employee_number, pass, name) {
     var employee_numbers = [];
     var passes = [];
     var flag = 0;
-    employee_number=Number(employee_number);
-    pass=String(pass);
+    employee_number = Number(employee_number);
+    pass = String(pass);
     if (employee_number != "" && pass != "") {
         for (var i = 0; i < length; i++) {
             employee_numbers.push(sheet_see[i][1]);
@@ -174,28 +179,34 @@ function getPass(employee_number, pass, name) {
             flag = 3;
         }
     }
-    return [flag,name];
+    return [flag, name];
 
 }
 
 ////山岸pdca
-    
-function doPost(postdata){
-    
-    var sh=SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var time=new Date();
-    
+
+function doPost(postdata) {
+
+    var sh = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var time = new Date();
+
     var ap = postdata.parameters.ap.toString();
-    var name=postdata.parameters.name.toString();
-    var target=postdata.parameters.target.toString();
-    var p=postdata.parameters.p.toString();
-    var d=postdata.parameters.d.toString();
-    var c=postdata.parameters.c.toString();
-    var a=postdata.parameters.a.toString();
-    
-    sh.appendRow([time,ap,name,target,p,d,c,a]);
-    
-    var resultpage=HtmlService.createTemplateFromFile("result");
+    var name = postdata.parameters.name.toString();
+    var target = postdata.parameters.target.toString();
+    var p = postdata.parameters.p.toString();
+    var d = postdata.parameters.d.toString();
+    var c = postdata.parameters.c.toString();
+    var a = postdata.parameters.a.toString();
+
+    sh.appendRow([time, ap, name, target, p, d, c, a]);
+
+    var resultpage = HtmlService.createTemplateFromFile("result");
     return resultpage.evaluate();
 }
 
+
+function hankakutoZenkaku(str) {
+    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+        return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+    });
+}

@@ -1,21 +1,25 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script>
-       function func() {
+    <script>
+function func() {
     var name = prompt("名前を入力してください（フルネームスペースなし）");
     if (name == null) {
-            alert('キャンセルしました。');
-            return false;
-     }else if(name==""){
-           alert('名前を入力してください');
-           return false;
-     }
+        alert('キャンセルしました。');
+        return false;
+    } else if (name == "") {
+        alert('名前を入力してください');
+        return false;
+    }
     var employee_number = prompt("社員番号を入力してください（半角）");
     //console.log(String(name).length);
     if (employee_number != null) {
-        if(String(employee_number).length!=9){
+        if (String(employee_number).length != 9) {
             alert('9桁の社員番号を入力してください');
             return false;
-           }
+        } else if (isNaN(employee_number) == true) {
+            alert('半角で入力してください');
+            return false;
+
+        }
         var pass = prompt("パスワードを入力してください(初めての場合は新規登録されます)");
         if (pass != null) {
             $('#table-impression').empty();
@@ -29,8 +33,8 @@
         return false;
     }
 }
-  //成功時
-       function onSuccess_pass(res) {
+//成功時
+function onSuccess_pass(res) {
     //console.log(res);
     if (res[0] == 1) {
         $('#namae').val(res[1]);
@@ -48,11 +52,12 @@
         return false;
     }
 }
-       //失敗時
-       function onFailure(res){
-            alert(res);
-          return false;
-       }
+//失敗時
+function onFailure(res) {
+    alert(res);
+    return false;
+}
+
 
 </script>
 
