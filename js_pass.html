@@ -1,11 +1,25 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
        function func() {
-    var name = prompt("氏名をフルネームで入力してください（スペースなし）");
-    if (name != null) {
-        var pass = prompt("パスワードを入力してください");
+    var name = prompt("名前を入力してください（フルネームスペースなし）");
+    if (name == null) {
+            alert('キャンセルしました。');
+            return false;
+     }else if(name==""){
+           alert('名前を入力してください');
+           return false;
+     }
+    var employee_number = prompt("社員番号を入力してください（半角）");
+    //console.log(String(name).length);
+    if (employee_number != null) {
+        if(String(employee_number).length!=9){
+            alert('9桁の社員番号を入力してください');
+            return false;
+           }
+        var pass = prompt("パスワードを入力してください(初めての場合は新規登録されます)");
         if (pass != null) {
-            google.script.run.withSuccessHandler(onSuccess_pass).withFailureHandler(onFailure).getPass(name, pass);
+            $('#table-impression').empty();
+            google.script.run.withSuccessHandler(onSuccess_pass).withFailureHandler(onFailure).getPass(employee_number, pass, name);
         } else {
             alert('キャンセルしました。');
             return false;
@@ -17,19 +31,19 @@
 }
   //成功時
        function onSuccess_pass(res) {
-    console.log(res);
-    
-    if (res == 1) {
+    //console.log(res);
+    if (res[0] == 1) {
+        $('#namae').val(res[1]);
         $('.js-modal').fadeIn();
         return false;
     }
-    else if (res == 2) {
+    else if (res[0] == 2) {
         alert('追加しました');
         return false;
-    } else if (res == 3) {
+    } else if (res[0] == 3) {
         alert('パスワードが違います');
         return false;
-    } else if (res == 0) {
+    } else if (res[0] == 0) {
         alert('パスワードと社員番号を入力してください');
         return false;
     }

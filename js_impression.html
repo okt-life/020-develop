@@ -2,12 +2,56 @@
 <script>
        
        function doAction_impression(){
-          var name = document.getElementById("name").value;
+          var name = document.getElementById("namae").value;
           var word = document.getElementById("free").value;
-          google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).gssText(name,word);//サーバー側のスクリプトを呼び出し（非同期）
+          var startdata = document.getElementById("startdata_impression").value;
+          var finishdata = document.getElementById("finishdata_impression").value;
+           if (name == "") {
+            alert("名前を入力してください");
+            return false;
+          } else if (startdata == "") {
+            alert("開始日を入力してください");
+            return false;
+          } else if (finishdata == "") {
+            alert("終了日を入力してください");
+            return false;
+            //追加で社員番号のエラーハンドリングも実装する
+          } else {
+            google.script.run.withSuccessHandler(onSuccess_impression).withFailureHandler(onFailure_impression).gssText(name,word,startdata,finishdata);//サーバー側のスクリプトを呼び出し（非同期）
+          }
+          
        }
        
        //成功時
+       function onSuccess_impression(res){
+       
+          $('#table-impression').empty();
+          
+          if(res[0].length!=0){
+          $(function(){
+            var th="<tr><th>タイトル</th><th>感想</th></tr>";
+            
+            
+            $('#table-impression').append('<table class="table-content"></table>');
+            $('.table-content').append(th);
+            for(let i=0;i<res[0].length;i++){
+              var td="<tr><td>"+res[1][i]+"</td><td>"+res[0][i]+"</td></tr>";
+              $('.table-content').append(td);
+            }
+           
+          });
+          }else{
+            var error="<p>検索結果がありません</p>";
+            $('#table-impression').append(error);
+
+          }
+       }
+       //失敗時
+       function onFailure_impression(res){
+          alert(res);
+          return false;
+       }
+/*
        function onSuccess(res){ 
           //var message = document.getElementById("impression-table");
           var table='<table class="table-contain"></table>';
@@ -27,7 +71,7 @@
           message.innerHTML = res;
        }
 
-       
+ */
 
 </script>
 

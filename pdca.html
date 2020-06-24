@@ -7,17 +7,27 @@
   <body>
   <?var url = getScriptUrl();?>
   <input type="button" value="メインページへ" class="btn-leave submit-leaving" onclick="window.top.location.href = '<?!=url?>?page=ohashi';"/>
-    <ul class="tab-list">
+    <ul class="tab-list">c
 		<li class="active">登録</li>
 		<li>PDCA一覧</li>
 	</ul>
 
 <div class="tab-box">
 		<div class="tab-content open">
-			<form>
-            <input><br>
-            <textarea></textarea>
+            <div class="registration">
+            
+            <form  method=”post” action="https://script.google.com/a/race-ss.co.jp/macros/s/AKfycbzex_YkgoP-vIG0afwTJcOWHsWErm2XfyiiJfwjGjli6Evetjz_/exec">        
+                アポ数:<input type="number" name="ap"><br><br>
+                名前:<input type="text" name="name"><br><br>
+                目標:<input type="text" name="target" size="50"><br><br>
+                P:<textarea name="p" rows="4" cols="50"></textarea><br><br>
+                D:<textarea name="d" rows="4" cols="50"></textarea><br><br>
+                C:<textarea name="c" rows="4" cols="50"></textarea><br><br>
+                A:<textarea name="a"rows="4" cols="50"></textarea><br><br>
+               <input type="submit" value="登録" style="width:500px;height:50px"><br> 
             </form>
+            </div>
+      
 		</div>
 		<!-- /.tab-content -->
 		<div class="tab-content">

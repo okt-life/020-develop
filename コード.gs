@@ -1,7 +1,7 @@
 function doGet(e) {
     Logger.log(Utilities.jsonStringify(e));
     if (!e.parameter.page) {
-        return HtmlService.createTemplateFromFile('top-page').evaluate();
+        return HtmlService.createTemplateFromFile('top-page').evaluate().setTitle('振り返りシステム');
     }
     return HtmlService.createTemplateFromFile(e.parameter['page']).evaluate();
 }
@@ -66,6 +66,42 @@ function gssDay(name, startdata, finishdata) {
     return [day, time, startdata, finishdata, day_impression, time_impression];
 }
 
+
+function gssText(name, free,startdata, finishdata) {
+    //スプレッドシートの情報を取得する処理を記入
+    var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
+    var length = values.length;
+    var impressions = [];
+    var impressions_sum = [];
+    var titles = [];
+    var titles_sum = [];
+    var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
+    var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
+    for (var i = 1; i < length; i++) {
+        //名前が一致しているか
+        if (name == values[i][1]) {
+            //スプレッドシートから取得した時間をタイムスタンプに変換
+            var timedata = values[i][0].getTime() / 1000;
+            var dates = new Date(timedata * 1000);
+            //開始日以上、終了日未満の時間を取得
+            if (startdata <= timedata && finishdata >= timedata) {
+                impressions.push(values[i][4]);
+                titles.push(values[i][3]);
+            }
+        }
+    }
+
+    
+    for (var i = 0; i < impressions.length; i++) {
+        if (impressions[i].indexOf(free) != -1 || titles[i].indexOf(free) != -1) {
+            impressions_sum.push(impressions[i]);
+            titles_sum.push(titles[i]);
+        }
+    }
+    
+    return [impressions_sum, titles_sum];
+}
+/*
 function gssText(name, free) {
     //スプレッドシートの情報を取得する処理を記入
     var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
@@ -99,7 +135,7 @@ function gssText(name, free) {
     }
     return [days, titles, comments, comments.length];
 }
-
+*/
 function getPdca(name) {
     var sheet = SpreadsheetApp.openById("1Tnb0ZdZn1LSrPFr-doEdeE7jeQeCLT-TCzKIx8lnCdE").getDataRange().getValues();
     var length = sheet[0].length;
@@ -112,30 +148,54 @@ function getPdca(name) {
     return [id, names, ap, tasks, targets];
 }
 
-function getPass(name, pass) {
+function getPass(employee_number, pass, name) {
     var sheet_insert = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ユーザー');
     var sheet_see = sheet_insert.getDataRange().getValues();
     var length = sheet_see.length;
-    var names = [];
+    var employee_numbers = [];
     var passes = [];
     var flag = 0;
-    if (name != "" && pass != "") {
+    employee_number=Number(employee_number);
+    pass=String(pass);
+    if (employee_number != "" && pass != "") {
         for (var i = 0; i < length; i++) {
-            names.push(sheet_see[i][1]);
+            employee_numbers.push(sheet_see[i][1]);
             passes.push(sheet_see[i][2]);
         }
-
-        if (names.indexOf(name) == -1) {
+        if (employee_numbers.indexOf(employee_number) == -1) {
+            sheet_insert.getRange(length + 1, 4).setValue(name);
             sheet_insert.getRange(length + 1, 3).setValue(pass);
-            sheet_insert.getRange(length + 1, 2).setValue(name);
+            sheet_insert.getRange(length + 1, 2).setValue(employee_number);
             sheet_insert.getRange(length + 1, 1).setValue(length);
             flag = 2;
-        } else if (passes[names.indexOf(name)] == pass) {
+        } else if (passes[employee_numbers.indexOf(employee_number)] == pass) {
             flag = 1;
         } else {
             flag = 3;
         }
     }
-    return flag;
+    return [flag,name];
 
 }
+
+////山岸pdca
+    
+function doPost(postdata){
+    
+    var sh=SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var time=new Date();
+    
+    var ap = postdata.parameters.ap.toString();
+    var name=postdata.parameters.name.toString();
+    var target=postdata.parameters.target.toString();
+    var p=postdata.parameters.p.toString();
+    var d=postdata.parameters.d.toString();
+    var c=postdata.parameters.c.toString();
+    var a=postdata.parameters.a.toString();
+    
+    sh.appendRow([time,ap,name,target,p,d,c,a]);
+    
+    var resultpage=HtmlService.createTemplateFromFile("result");
+    return resultpage.evaluate();
+}
+
