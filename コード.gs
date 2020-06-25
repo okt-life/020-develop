@@ -93,8 +93,8 @@ function gssText(name, free, startdata, finishdata,kumi) {
             var dates = new Date(timedata * 1000);
             //開始日以上、終了日未満の時間を取得
             if (startdata <= timedata && finishdata >= timedata) {
-                impressions.push(values[i][4]);
                 titles.push(values[i][3]);
+                impressions.push(values[i][4]);
                 day_impression.push(dates.toLocaleString());
             }
         }
@@ -102,7 +102,7 @@ function gssText(name, free, startdata, finishdata,kumi) {
 
 
     for (var i = 0; i < impressions.length; i++) {
-        if (impressions[i].indexOf(free) != -1 || titles[i].indexOf(free) != -1) {
+        if (String(hankakutoZenkaku(impressions[i])).toLowerCase().indexOf(String(hankakutoZenkaku(free)).toLowerCase()) != -1 || String(hankakutoZenkaku(titles[i])).toLowerCase().indexOf(String(hankakutoZenkaku(free)).toLowerCase()) != -1) {
             impressions_sum.push(impressions[i]);
             titles_sum.push(titles[i]);
         }
@@ -212,7 +212,11 @@ function doPost(postdata) {
 
 
 function hankakutoZenkaku(str) {
+    if(isNaN(str)){
     return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
         return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
     });
+    }else{
+      return str;
+    }
 }

@@ -31,10 +31,15 @@
           if(res[0].length!=0){
           $(function(){
             var th="<tr><th>タイトル</th><th>感想</th></tr>";
+            var p="<p>検索結果数："+res[0].length+"件</p><br>"
             
             
+            $('#table-impression').append(p);
             $('#table-impression').append('<table class="table-content"></table>');
+            
             $('.table-content').append(th);
+           
+            
             for(let i=0;i<res[0].length;i++){
               var td="<tr><td>"+res[1][i]+"</td><td>"+res[0][i]+"</td></tr>";
               $('.table-content').append(td);
