@@ -2,6 +2,7 @@
 <script>
 
 function doAction_leaving() {
+    var classes = document.getElementById("classes").value;
     var name = document.getElementById("name").value;
     var startdata = document.getElementById("startdata").value;
     var finishdata = document.getElementById("finishdata").value;
@@ -16,13 +17,16 @@ function doAction_leaving() {
         return false;
         //追加で社員番号のエラーハンドリングも実装する
     } else {
-        google.script.run.withSuccessHandler(onSuccess_leaving).withFailureHandler(onFailure_leaving).gssDay(name, startdata, finishdata);//サーバー側のスクリプトを呼び出し（非同期）
+        google.script.run.withSuccessHandler(onSuccess_leaving).withFailureHandler(onFailure_leaving).gssDay(name, startdata, finishdata,classes);//サーバー側のスクリプトを呼び出し（非同期）
     }
 
 }
 
 //成功時
 function onSuccess_leaving(res) {
+    //console.log(res[0]);
+    //console.log(res[1]);
+    //return false;
     $('#table-display').empty();
     var day = document.getElementById("day");
     var time = document.getElementById("time");

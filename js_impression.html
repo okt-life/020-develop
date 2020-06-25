@@ -2,6 +2,7 @@
 <script>
        
        function doAction_impression(){
+          var classes = document.getElementById("classes_impression").value;
           var name = document.getElementById("namae").value;
           var word = document.getElementById("free").value;
           var startdata = document.getElementById("startdata_impression").value;
@@ -17,7 +18,7 @@
             return false;
             //追加で社員番号のエラーハンドリングも実装する
           } else {
-            google.script.run.withSuccessHandler(onSuccess_impression).withFailureHandler(onFailure_impression).gssText(name,word,startdata,finishdata);//サーバー側のスクリプトを呼び出し（非同期）
+            google.script.run.withSuccessHandler(onSuccess_impression).withFailureHandler(onFailure_impression).gssText(name,word,startdata,finishdata,classes);//サーバー側のスクリプトを呼び出し（非同期）
           }
           
        }

@@ -11,9 +11,10 @@ function getScriptUrl() {
     return url;
 }
 
-function gssDay(name, startdata, finishdata) {
+function gssDay(name, startdata, finishdata,kumi) {
     //スプレッドシートの情報を取得する処理を記入
-    var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
+    var kumis=String('＜'+kumi+'＞感想');
+    var values = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(kumis).getDataRange().getValues();
     var length = values.length;
     var day = [];
     var time = [];
@@ -24,9 +25,10 @@ function gssDay(name, startdata, finishdata) {
     var time_impression = [];
     var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
     var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
+    
     for (var i = 1; i < length; i++) {
         //名前が一致しているか
-        if (name == values[i][1]) {
+        if (name == values[i][2]) {
             //スプレッドシートから取得した時間をタイムスタンプに変換
             var timedata = values[i][0].getTime() / 1000;
             var dates = new Date(timedata * 1000);
@@ -43,7 +45,8 @@ function gssDay(name, startdata, finishdata) {
                 var dateTime = dates.toLocaleTimeString('ja-JP');
                 day.push(date);
                 time.push(dateTime);
-                title.push(hankakutoZenkaku(values[i][3]));
+                //空白は削除、全角は半角に変換
+                title.push(hankakutoZenkaku(values[i][3]).trim());
 
 
             }
@@ -70,9 +73,10 @@ function gssDay(name, startdata, finishdata) {
 }
 
 
-function gssText(name, free, startdata, finishdata) {
+function gssText(name, free, startdata, finishdata,kumi) {
     //スプレッドシートの情報を取得する処理を記入
-    var values = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
+    var kumis=String('＜'+kumi+'＞感想');
+    var values = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(kumis).getDataRange().getValues();
     var length = values.length;
     var impressions = [];
     var impressions_sum = [];
@@ -83,7 +87,7 @@ function gssText(name, free, startdata, finishdata) {
     var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
     for (var i = 1; i < length; i++) {
         //名前が一致しているか
-        if (name == values[i][1]) {
+        if (name == values[i][2]) {
             //スプレッドシートから取得した時間をタイムスタンプに変換
             var timedata = values[i][0].getTime() / 1000;
             var dates = new Date(timedata * 1000);
@@ -158,6 +162,7 @@ function getPass(employee_number, pass, name) {
     var sheet_see = sheet_insert.getDataRange().getValues();
     var length = sheet_see.length;
     var employee_numbers = [];
+    var names = [];
     var passes = [];
     var flag = 0;
     employee_number = Number(employee_number);
@@ -166,8 +171,9 @@ function getPass(employee_number, pass, name) {
         for (var i = 0; i < length; i++) {
             employee_numbers.push(sheet_see[i][1]);
             passes.push(sheet_see[i][2]);
+            names.push(sheet_see[i][3]);
         }
-        if (employee_numbers.indexOf(employee_number) == -1) {
+        if (names.indexOf(name) == -1) {
             sheet_insert.getRange(length + 1, 4).setValue(name);
             sheet_insert.getRange(length + 1, 3).setValue(pass);
             sheet_insert.getRange(length + 1, 2).setValue(employee_number);
