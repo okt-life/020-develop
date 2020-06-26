@@ -23,8 +23,7 @@ function gssDay(name, startdata, finishdata,kumi) {
     var title = [];
     var day_impression = [];
     var time_impression = [];
-    var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
-    var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
+    finishdata+=86400;
     
     for (var i = 1; i < length; i++) {
         //名前が一致しているか
@@ -83,8 +82,8 @@ function gssText(name, free, startdata, finishdata,kumi) {
     var titles = [];
     var titles_sum = [];
     var day_impression = [];
-    var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
-    var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
+    
+    finishdata+=86400;
     for (var i = 1; i < length; i++) {
         //名前が一致しているか
         if (name == values[i][2]) {
@@ -161,6 +160,37 @@ function getPass(employee_number, pass, name) {
     var sheet_insert = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ユーザー');
     var sheet_see = sheet_insert.getDataRange().getValues();
     var length = sheet_see.length;
+    
+    var flag = 0;
+    employee_number = Number(employee_number);
+    pass = String(pass);
+    if (employee_number != "" && pass != "") {
+        for (var i = 0; i < length; i++) {
+            if(sheet_see[i][1]==employee_number && sheet_see[i][2]==pass && sheet_see[i][3]==name){
+            flag=1;
+            return [flag, name];
+            }else if(sheet_see[i][1]==employee_number && sheet_see[i][2]==pass){
+            flag=2;
+            return [flag, name];
+            }else if(sheet_see[i][1]==employee_number){
+            flag=3;
+            return [flag, name];
+            }else{
+            flag=4;
+            }
+        
+    }
+    }
+    return [flag, name];
+
+}
+
+//0625まで
+/*
+function getPass(employee_number, pass, name) {
+    var sheet_insert = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ユーザー');
+    var sheet_see = sheet_insert.getDataRange().getValues();
+    var length = sheet_see.length;
     var employee_numbers = [];
     var names = [];
     var passes = [];
@@ -188,7 +218,7 @@ function getPass(employee_number, pass, name) {
     return [flag, name];
 
 }
-
+*/
 ////山岸pdca
 
 function doPost(postdata) {

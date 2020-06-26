@@ -1,38 +1,13 @@
 <style>
-
-p {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-}
-table {
-  font-size: 1.4em;
-  font-family: Arial, sans-serif;
-  margin: 20px auto;
-  border-collapse: collapse;
-}
-.table-content th {
-  background-color:#e9727e;
-  border: solid 1px #ccc;
-  color: #fff;
-  padding: 10px;
-}
-.table-content td {
-  font-weight:400;
-  border:solid 1px rgba(240,248,255,1);
-  padding: 10px;
-}
-
 .leave-title{
-  font-size:1.4em;
+  font-size:1.8em;
 }
 .search-container{ 
  color:#fff;
  background-color: #3cad7e;
 }
 /*form*/
-.modal-search-contents input{
+.modal-search-contents input,.modal-search-contents select{
     vertical-align:center;
     border: 0;
     padding: 5px;
@@ -49,7 +24,7 @@ table {
     -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
     box-shadow: inner 0 0 4px rgba(0, 0, 0, 0.2);
 }
-.submit-leaving {
+.submit-leaving,.submit-impression {
     display: inline-block;
     padding: 0.3em 1em;
     background-color: #3cad7e;
@@ -60,8 +35,11 @@ table {
     border-radius: 3px;
     transition: .4s;
 }
+.submit-impression{
+    background-color: #3cad7e;
+}
 
-.submit-leaving:hover {
+.submit-leaving:hover,.submit-impression:hover {
     border: solid 2px #67c5ff;
     background: #67c5ff;
     color: white;

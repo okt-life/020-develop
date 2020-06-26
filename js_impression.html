@@ -2,22 +2,39 @@
 <script>
        
        function doAction_impression(){
+          $('.click-once').css('pointer-events','none');
           var classes = document.getElementById("classes_impression").value;
           var name = document.getElementById("namae").value;
           var word = document.getElementById("free").value;
           var startdata = document.getElementById("startdata_impression").value;
           var finishdata = document.getElementById("finishdata_impression").value;
+          var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
+          var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
            if (name == "") {
             alert("名前を入力してください");
+            $('.click-once').css('pointer-events','auto');
             return false;
-          } else if (startdata == "") {
+          } else if (startdata == null) {
             alert("開始日を入力してください");
+            $('.click-once').css('pointer-events','auto');
             return false;
-          } else if (finishdata == "") {
+          } else if (finishdata == null) {
             alert("終了日を入力してください");
+            $('.click-once').css('pointer-events','auto');
             return false;
-            //追加で社員番号のエラーハンドリングも実装する
+          } else if (classes == "") {
+            alert("組を入力してください");
+            $('.click-once').css('pointer-events','auto');
+            return false;
+          } else if (startdata > finishdata) {
+            alert("正しい日付を入力してください");
+            $('.click-once').css('pointer-events','auto');
+            return false;
           } else {
+            var target = document.getElementById("fadeLayer_impression");
+            target.style.visibility = "visible";
+            $('.modal__content').css('overflow','hidden');
+            $('.loading').show();
             google.script.run.withSuccessHandler(onSuccess_impression).withFailureHandler(onFailure_impression).gssText(name,word,startdata,finishdata,classes);//サーバー側のスクリプトを呼び出し（非同期）
           }
           
@@ -25,14 +42,17 @@
        
        //成功時
        function onSuccess_impression(res){
-          
+          var target = document.getElementById("fadeLayer_impression");
+          $('.modal__content').css('overflow','scroll');
+          target.style.visibility = "hidden";
+          $('.loading').fadeOut();
+          $('.click-once').css('pointer-events','auto');
           $('#table-impression').empty();
           
           if(res[0].length!=0){
           $(function(){
-            var th="<tr><th>タイトル</th><th>感想</th></tr>";
-            var p="<p>検索結果数："+res[0].length+"件</p><br>"
-            
+            var th="<tr><th>時間</th><th>タイトル</th><th>感想</th></tr>";
+            var p="<p class='search-title'>検索結果数："+res[0].length+"件</p><br>"
             
             $('#table-impression').append(p);
             $('#table-impression').append('<table class="table-content"></table>');
@@ -41,19 +61,26 @@
            
             
             for(let i=0;i<res[0].length;i++){
-              var td="<tr><td>"+res[1][i]+"</td><td>"+res[0][i]+"</td></tr>";
+              var date=res[2][i];
+              var td="<tr><td>"+date+"</td><td>"+res[1][i]+"</td><td>"+res[0][i]+"</td></tr>";
               $('.table-content').append(td);
             }
            
           });
           }else{
             var error="<p>検索結果がありません</p>";
+            var error_if="<p>指定した組は正しいですか？</p>";
             $('#table-impression').append(error);
+            $('#table-impression').append(error_if);
 
           }
        }
        //失敗時
        function onFailure_impression(res){
+          var target = document.getElementById("fadeLayer_impression");
+          $('.modal__content').css('overflow','scroll');
+          target.style.visibility = "hidden";
+          $('.loading').fadeOut();
           alert(res);
           return false;
        }

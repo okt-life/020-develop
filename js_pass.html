@@ -20,7 +20,7 @@ function func() {
             return false;
 
         }
-        var pass = prompt("パスワードを入力してください(初めての場合は新規登録されます)");
+        var pass = prompt("パスワードを入力してください");
         if (pass != null) {
             $('#table-impression').empty();
             google.script.run.withSuccessHandler(onSuccess_pass).withFailureHandler(onFailure).getPass(employee_number, pass, name);
@@ -36,21 +36,21 @@ function func() {
 //成功時
 function onSuccess_pass(res) {
     //console.log(res);
+    //return false;
     if (res[0] == 1) {
         $('#namae').val(res[1]);
         $('.js-modal').fadeIn();
         return false;
-    }
-    else if (res[0] == 2) {
-        alert('追加しました');
+    }else if (res[0] == 2) {
+        alert('名前が違います');
         return false;
-    } else if (res[0] == 3) {
+    }else if (res[0] == 3) {
         alert('パスワードが違います');
         return false;
-    } else if (res[0] == 0) {
-        alert('パスワードと社員番号を入力してください');
+    }else if (res[0] == 4) {
+        alert('社員番号が違います');
         return false;
-    }
+    } 
 }
 //失敗時
 function onFailure(res) {

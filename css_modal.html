@@ -34,7 +34,7 @@
     transform: translate(-50%, -50%);
     width: 80%;
     height: 80%;
-    overflow-y: scroll;
+    overflow: scroll;
 
 }
 
@@ -90,7 +90,18 @@
 		background-color:red;
 	}
     
-    .container{display:none;}
+
+#fadeLayer,#fadeLayer_impression {
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:1920px;
+  height:1080px;
+
+  background-color:rgba(0,0,0,0.8);
+  visibility:hidden;
+  z-index:1;
+}
 
 .loading{
 	display:none;
@@ -98,7 +109,16 @@
 	left:50%;
 	top:50%;
 	margin-left:-30px;
+    z-index:100;
 }
+
+.loading img{
+    border-radius: 50%;
+	width:100px;
+    height:100px;
+    
+    }
 </style>
+
 
 

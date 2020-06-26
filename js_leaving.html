@@ -2,21 +2,40 @@
 <script>
 
 function doAction_leaving() {
+    $('.click-once').css('pointer-events','none');
     var classes = document.getElementById("classes").value;
     var name = document.getElementById("name").value;
     var startdata = document.getElementById("startdata").value;
     var finishdata = document.getElementById("finishdata").value;
+    var startdata = Date.parse(startdata.replace(/-/g, '/')) / 1000;
+    var finishdata = Date.parse(finishdata.replace(/-/g, '/')) / 1000;
     if (name == "") {
         alert("名前を入力してください");
+        $('.click-once').css('pointer-events','auto');
         return false;
     } else if (startdata == "") {
         alert("開始日を入力してください");
+        $('.click-once').css('pointer-events','auto');
         return false;
     } else if (finishdata == "") {
         alert("終了日を入力してください");
+        $('.click-once').css('pointer-events','auto');
         return false;
-        //追加で社員番号のエラーハンドリングも実装する
-    } else {
+        
+    } else if (classes == "") {
+        alert("組を入力してください");
+        $('.click-once').css('pointer-events','auto');
+        return false;
+        
+    } else if (startdata > finishdata) {
+            alert("正しい日付を入力してください");
+            $('.click-once').css('pointer-events','auto');
+            return false;
+          }else {
+        var target = document.getElementById("fadeLayer");
+        target.style.visibility = "visible";
+        $('.modal__content').css('overflow','hidden');
+        $('.loading').show();
         google.script.run.withSuccessHandler(onSuccess_leaving).withFailureHandler(onFailure_leaving).gssDay(name, startdata, finishdata,classes);//サーバー側のスクリプトを呼び出し（非同期）
     }
 
@@ -27,6 +46,11 @@ function onSuccess_leaving(res) {
     //console.log(res[0]);
     //console.log(res[1]);
     //return false;
+    var target = document.getElementById("fadeLayer");
+    $('.loading').fadeOut();
+    $('.modal__content').css('overflow','scroll');
+    target.style.visibility = "hidden";
+    $('.click-once').css('pointer-events','auto');
     $('#table-display').empty();
     var day = document.getElementById("day");
     var time = document.getElementById("time");
@@ -45,12 +69,20 @@ function onSuccess_leaving(res) {
         });
     } else {
         var error = "<p>検索結果がありません</p>";
-        $('#table-display').append(error);
+        var error_if="<p>指定した組は正しいですか？</p>";
+            $('#table-display').append(error);
+            $('#table-display').append(error_if);
+
 
     }
 }
 //失敗時
 function onFailure_leaving(res) {
+$('.modal__content').css('overflow','scroll');
+    var target = document.getElementById("fadeLayer_impression");
+    $('.loading').fadeOut();
+    target.style.visibility = "hidden";
+    $('.click-once').css('pointer-events','auto');
     alert(res);
     return false;
 }
